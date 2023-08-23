@@ -26,8 +26,15 @@ const useApiClient = () => {
     return await client.request({ ...config, ..._config });
   };
 
+  const getJeepData = async () => {
+    return await client.request({
+      url: 'getRoutes',
+    });
+  };
+
   return {
     getRoute,
+    getJeepData,
   };
 };
 
