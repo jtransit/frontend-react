@@ -1,4 +1,4 @@
-import MapWrapper from '@components/map-wrapper';
+import MapWrapper from '@components/map/wrapper';
 
 const Home = () => {
   return <MapWrapper />;
