@@ -1,7 +1,13 @@
 import { useMapContext } from '@contexts/map-context';
 
-export const Menu = () => {
-  const { isContextMenuOpen, containerPoint, action } = useMapContext();
+export const ContextMenu = () => {
+  const {
+    isContextMenuOpen,
+    containerPoint,
+    action,
+    handleAddFrom,
+    handleAddTo,
+  } = useMapContext();
 
   return (
     <>
@@ -21,14 +27,25 @@ export const Menu = () => {
           }}
         >
           <ul>
-            <li>
+            <li className='hover:bg-gray-200 p-1'>
               {action === undefined && (
                 <a
                   id='context-menu-add-marker'
-                  onClick={() => {}}
+                  onClick={handleAddFrom}
                   style={{ cursor: 'pointer' }}
                 >
                   Directions from here
+                </a>
+              )}
+            </li>
+            <li className='hover:bg-gray-200 p-1'>
+              {action === undefined && (
+                <a
+                  id='context-menu-add-marker'
+                  onClick={handleAddTo}
+                  style={{ cursor: 'pointer' }}
+                >
+                  Directions to here
                 </a>
               )}
             </li>

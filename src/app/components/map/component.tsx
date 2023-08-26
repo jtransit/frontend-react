@@ -8,7 +8,7 @@ import { decode } from '@googlemaps/polyline-codec';
 import useApiClient from '@hooks/api/api-client';
 import { MapContextProvider } from '@contexts/map-context';
 import { MapEvents } from '@components/map/events';
-import { Menu } from '@components/menu/context-menu';
+import { ContextMenu } from '@components/menu/context-menu';
 
 const MapComponent = () => {
   const { getRoute } = useApiClient();
@@ -44,7 +44,7 @@ const MapComponent = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
-        <Menu />
+        <ContextMenu />
         <Polyline pathOptions={{ color: 'blue', weight: 5 }} positions={line} />
         <MapEvents />
       </MapContextProvider>

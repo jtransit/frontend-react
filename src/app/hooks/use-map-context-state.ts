@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 
 import { MapContextProps, defaultMapContext } from '@app-types/map-context';
+import useApiClient from '@api/api-client';
 
 const useMapContextState: () => MapContextProps = () => {
-  const map = useMap();
+  const { getRoute } = useApiClient();
 
   const [isLoading, setIsLoading] = useState(defaultMapContext.isLoading);
 
@@ -18,6 +19,8 @@ const useMapContextState: () => MapContextProps = () => {
   );
 
   const [latLng, setLatLng] = useState<L.LatLng>(defaultMapContext.latLng);
+  const [from, setFrom] = useState<L.LatLng | undefined>();
+  const [to, setTo] = useState<L.LatLng | undefined>();
 
   const [action, setAction] = useState<string>();
 
@@ -47,6 +50,31 @@ const useMapContextState: () => MapContextProps = () => {
     setLatLng(v);
   };
 
+  const handleAddFrom = () => {
+    setFrom(latLng);
+    handleContextMenuClose();
+  };
+
+  const handleAddTo = () => {
+    setTo(latLng);
+    handleContextMenuClose();
+  };
+
+  useEffect(() => {
+    const request = async () => {
+      if (from !== undefined && to !== undefined) {
+        const response = await getRoute(
+          `${from.lat},${from.lng}`,
+          `${to.lat},${to.lng}`,
+          '0',
+          '800'
+        );
+      }
+    };
+
+    request();
+  }, [from, to]);
+
   return {
     isLoading,
     isContextMenuOpen,
@@ -57,6 +85,8 @@ const useMapContextState: () => MapContextProps = () => {
     handleAction,
     handleContextMenuOpen,
     handleContextMenuClose,
+    handleAddFrom,
+    handleAddTo,
   };
 };
 

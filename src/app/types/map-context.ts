@@ -11,6 +11,8 @@ export interface MapContextProps {
   handleAction: (v?: string) => void;
   handleContextMenuOpen: (e: L.LeafletMouseEvent) => void;
   handleContextMenuClose: () => void;
+  handleAddFrom: () => void;
+  handleAddTo: () => void;
 }
 
 export const defaultMapContext: MapContextProps = {
@@ -22,6 +24,8 @@ export const defaultMapContext: MapContextProps = {
   handleAction: (v?: string) => {},
   handleContextMenuOpen: (e: L.LeafletMouseEvent) => {},
   handleContextMenuClose: () => {},
+  handleAddFrom: () => {},
+  handleAddTo: () => {},
 };
 
 export interface MapContextProviderProps {

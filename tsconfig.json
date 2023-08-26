@@ -25,7 +25,8 @@
       "@components/*": ["./src/app/components/*"],
       "@hooks/*": ["./src/app/hooks/*"],
       "@contexts/*": ["./src/app/contexts/*"],
-      "@app-types/*": ["./src/app/types/*"]
+      "@app-types/*": ["./src/app/types/*"],
+      "@api/*": ["./src/app/hooks/api/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
