@@ -21,6 +21,9 @@ const useMapContextState: () => MapContextProps = () => {
   const [latLng, setLatLng] = useState<L.LatLng>(defaultMapContext.latLng);
   const [from, setFrom] = useState<L.LatLng | undefined>();
   const [to, setTo] = useState<L.LatLng | undefined>();
+  const [routes, setRoutes] = useState<Array<Record<string, unknown>>>(
+    defaultMapContext.routes
+  );
 
   const [action, setAction] = useState<string>();
 
@@ -60,6 +63,7 @@ const useMapContextState: () => MapContextProps = () => {
     handleContextMenuClose();
   };
 
+  // TODO:WIP API routing
   useEffect(() => {
     const request = async () => {
       if (from !== undefined && to !== undefined) {
@@ -69,6 +73,19 @@ const useMapContextState: () => MapContextProps = () => {
           '0',
           '800'
         );
+
+        const routes: Array<Record<string, unknown>> = [];
+        response.data.plan.itineraries.forEach((route: any) => {
+          const data: string[] = [];
+          route.legs.forEach((leg: any) => {
+            data.push(leg.legGeometry.points);
+          });
+          routes.push({
+            points: data,
+          });
+        });
+
+        setRoutes(routes);
       }
     };
 
@@ -81,6 +98,7 @@ const useMapContextState: () => MapContextProps = () => {
     action,
     containerPoint,
     latLng,
+    routes,
     handleLoading,
     handleAction,
     handleContextMenuOpen,
