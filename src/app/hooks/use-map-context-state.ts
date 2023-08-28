@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 
 import { MapContextProps, defaultMapContext } from '@app-types/map-context';
@@ -63,6 +62,13 @@ const useMapContextState: () => MapContextProps = () => {
     handleContextMenuClose();
   };
 
+  const handleClear = () => {
+    setFrom(undefined);
+    setTo(undefined);
+    setRoutes([]);
+    handleContextMenuClose();
+  };
+
   // TODO:WIP API routing
   useEffect(() => {
     const request = async () => {
@@ -105,6 +111,7 @@ const useMapContextState: () => MapContextProps = () => {
     handleContextMenuClose,
     handleAddFrom,
     handleAddTo,
+    handleClear,
   };
 };
 
