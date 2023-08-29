@@ -90,6 +90,7 @@ const useMapContextState: () => MapContextProps = () => {
   useEffect(() => {
     const request = async () => {
       if (from !== undefined && to !== undefined) {
+        handleLoading(true);
         const response = await getRoute(
           `${from.lat},${from.lng}`,
           `${to.lat},${to.lng}`,
@@ -110,6 +111,7 @@ const useMapContextState: () => MapContextProps = () => {
 
         setRoutes(routes);
         setSelectedRouteIndex(0);
+        handleLoading(false);
       }
     };
 
