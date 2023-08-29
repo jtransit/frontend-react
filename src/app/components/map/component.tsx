@@ -10,6 +10,7 @@ import { MapContextProvider } from '@contexts/map-context';
 import { MapEvents } from '@components/map/events';
 import { ContextMenu } from '@components/menu/context-menu';
 import Line from '@components/map/line';
+import NavigationMenu from '@components/menu/navigation-menu';
 
 const MapComponent = () => {
   const { getRoute } = useApiClient();
@@ -46,6 +47,7 @@ const MapComponent = () => {
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         <ContextMenu />
+        <NavigationMenu />
         <Line />
         <Polyline pathOptions={{ color: 'blue', weight: 5 }} positions={line} />
         <MapEvents />

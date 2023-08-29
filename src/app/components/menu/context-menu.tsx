@@ -1,5 +1,5 @@
 import { useMapContext } from '@contexts/map-context';
-import Item from './item';
+import ContextMenuItem from './context-menu-item';
 
 export const ContextMenu = () => {
   const {
@@ -29,9 +29,12 @@ export const ContextMenu = () => {
           }}
         >
           <ul>
-            <Item name='Directions from here' handler={handleAddFrom} />
-            <Item name='Directions to here' handler={handleAddTo} />
-            <Item name='Clear' handler={handleClear} />
+            <ContextMenuItem
+              name='Directions from here'
+              handler={handleAddFrom}
+            />
+            <ContextMenuItem name='Directions to here' handler={handleAddTo} />
+            <ContextMenuItem name='Clear' handler={handleClear} />
           </ul>
         </div>
       )}

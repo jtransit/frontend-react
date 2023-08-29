@@ -1,6 +1,12 @@
 import { useMapContext } from '@contexts/map-context';
 
-const Item = ({ name, handler }: { name: string; handler: () => void }) => {
+const ContextMenuItem = ({
+  name,
+  handler,
+}: {
+  name: string;
+  handler: () => void;
+}) => {
   const { action } = useMapContext();
 
   return (
@@ -18,4 +24,4 @@ const Item = ({ name, handler }: { name: string; handler: () => void }) => {
   );
 };
 
-export default Item;
+export default ContextMenuItem;
