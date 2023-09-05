@@ -22,10 +22,11 @@
     "paths": {
       "@/*": ["./src/*"],
       "@app/*": ["./src/app/*"],
-      "@components/*": ["./src/app/components/*"],
-      "@hooks/*": ["./src/app/hooks/*"],
-      "@contexts/*": ["./src/app/contexts/*"],
+      "@assets/*": ["./src/app/assets/*"],
       "@app-types/*": ["./src/app/types/*"],
+      "@components/*": ["./src/app/components/*"],
+      "@contexts/*": ["./src/app/contexts/*"],
+      "@hooks/*": ["./src/app/hooks/*"],
       "@api/*": ["./src/app/hooks/api/*"]
     }
   },
