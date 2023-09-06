@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useMap } from 'react-leaflet';
+import { useState, useEffect, useMemo } from 'react';
 import L from 'leaflet';
 
 import { MapContextProps, defaultMapContext } from '@app-types/map-context';
@@ -21,11 +20,15 @@ const useMapContextState: () => MapContextProps = () => {
   const [latLng, setLatLng] = useState<L.LatLng>(defaultMapContext.latLng);
   const [from, setFrom] = useState<L.LatLng | undefined>();
   const [to, setTo] = useState<L.LatLng | undefined>();
-  const [routes, setRoutes] = useState<Array<Record<string, unknown>>>(
-    defaultMapContext.routes
-  );
+  const [routes, setRoutes] = useState<Array<Record<string, unknown>>>([]);
+  const [selectedRouteIndex, setSelectedRouteIndex] = useState(0);
 
   const [action, setAction] = useState<string>();
+
+  const selectedRoute = useMemo(
+    () => routes[selectedRouteIndex],
+    [routes, selectedRouteIndex]
+  );
 
   const handleLoading = (v: boolean) => {
     setIsLoading(v);
@@ -63,10 +66,31 @@ const useMapContextState: () => MapContextProps = () => {
     handleContextMenuClose();
   };
 
+  const handleNext = () => {
+    setSelectedRouteIndex((state) => {
+      return routes[state + 1] === undefined ? state : state + 1;
+    });
+  };
+
+  const handleBack = () => {
+    setSelectedRouteIndex((state) => {
+      return routes[state - 1] === undefined ? state : state - 1;
+    });
+  };
+
+  const handleClear = () => {
+    setFrom(undefined);
+    setTo(undefined);
+    setRoutes([]);
+    setSelectedRouteIndex(0);
+    handleContextMenuClose();
+  };
+
   // TODO:WIP API routing
   useEffect(() => {
     const request = async () => {
       if (from !== undefined && to !== undefined) {
+        handleLoading(true);
         const response = await getRoute(
           `${from.lat},${from.lng}`,
           `${to.lat},${to.lng}`,
@@ -86,6 +110,8 @@ const useMapContextState: () => MapContextProps = () => {
         });
 
         setRoutes(routes);
+        setSelectedRouteIndex(0);
+        handleLoading(false);
       }
     };
 
@@ -98,13 +124,18 @@ const useMapContextState: () => MapContextProps = () => {
     action,
     containerPoint,
     latLng,
-    routes,
+    from,
+    to,
+    selectedRoute,
     handleLoading,
     handleAction,
     handleContextMenuOpen,
     handleContextMenuClose,
     handleAddFrom,
     handleAddTo,
+    handleNext,
+    handleBack,
+    handleClear,
   };
 };
 

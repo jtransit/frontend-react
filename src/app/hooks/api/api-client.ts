@@ -4,7 +4,7 @@ const useApiClient = () => {
   const client = axios.create({
     baseURL: 'https://jtransit.iapos.dev/webapp',
     responseType: 'json',
-    timeout: 20000,
+    timeout: 30000,
   });
 
   const getRoute = async (
