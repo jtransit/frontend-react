@@ -56,13 +56,9 @@ const Drawer = () => {
 
   return (
     <Box sx={styles.wrapper}>
-      <AnimatedDrawer
-        sx={{ height: '1rem' }}
-        style={props}
-        onClick={() => handleShowDrawer(!showDrawer)}
-      >
+      <AnimatedDrawer sx={{ height: '1rem' }} style={props}>
         <Box sx={styles.appIconWrapper}>
-          <Box sx={styles.icon}>
+          <Box sx={styles.icon} onClick={() => handleShowDrawer(!showDrawer)}>
             <AppIcon />
           </Box>
         </Box>

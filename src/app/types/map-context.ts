@@ -14,8 +14,8 @@ export interface MapContextProps {
   handleAction: (v?: string) => void;
   handleContextMenuOpen: (e: L.LeafletMouseEvent) => void;
   handleContextMenuClose: () => void;
-  handleAddFrom: () => void;
-  handleAddTo: () => void;
+  handleSetFrom: () => void;
+  handleSetTo: () => void;
   handleNext: () => void;
   handleBack: () => void;
   handleClear: () => void;
@@ -31,8 +31,8 @@ export const defaultMapContext: MapContextProps = {
   handleAction: (v?: string) => {},
   handleContextMenuOpen: (e: L.LeafletMouseEvent) => {},
   handleContextMenuClose: () => {},
-  handleAddFrom: () => {},
-  handleAddTo: () => {},
+  handleSetFrom: () => {},
+  handleSetTo: () => {},
   handleNext: () => {},
   handleBack: () => {},
   handleClear: () => {},
@@ -41,3 +41,30 @@ export const defaultMapContext: MapContextProps = {
 export interface MapContextProviderProps {
   children: ReactNode;
 }
+
+export interface MapAction {
+  type: string;
+  value?: string | boolean | L.LeafletMouseEvent | L.LatLng;
+}
+
+export interface MapState {
+  isLoading: boolean;
+  action?: string;
+  isContextMenuOpen: boolean;
+  containerPoint: L.Point;
+  eventHandler?: L.LeafletMouseEvent;
+  latLng: L.LatLng;
+  from?: L.LatLng;
+  to?: L.LatLng;
+  routes: Array<Record<string, unknown>>;
+  selectedRouteIndex: number;
+}
+
+export const defaultMapState: MapState = {
+  isLoading: false,
+  isContextMenuOpen: false,
+  containerPoint: defaultMapContext.containerPoint,
+  latLng: defaultMapContext.latLng,
+  routes: [],
+  selectedRouteIndex: 0,
+};
