@@ -3,11 +3,11 @@ import L from 'leaflet';
 
 import { MapContextProps, defaultMapState } from '@app-types/map-context';
 import { mapReducer } from './map-reducer';
-import useApiClient from '@api/api-client';
+import useRouteService from '@hooks/services/route-service';
 import { actions } from './actions';
 
 const useMapContextState: () => MapContextProps = () => {
-  const { getRoute } = useApiClient();
+  const { getRoute } = useRouteService();
 
   const [state, dispatch] = useReducer(mapReducer, defaultMapState);
 

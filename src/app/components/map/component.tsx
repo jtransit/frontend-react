@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import { LatLngExpression } from 'leaflet';
 import { decode } from '@googlemaps/polyline-codec';
 
-import useApiClient from '@hooks/api/api-client';
+import useRouteService from '@hooks/services/route-service';
 import { MapContextProvider } from '@contexts/map-context';
 import { MapEvents } from '@components/map/events';
 import { ContextMenu } from '@components/menu/context-menu';
@@ -13,7 +13,7 @@ import Line from '@components/map/line';
 import NavigationMenu from '@components/menu/navigation-menu';
 
 const MapComponent = () => {
-  const { getRoute } = useApiClient();
+  const { getRoute } = useRouteService();
 
   const [line, setLine] = useState<LatLngExpression[]>([]);
 

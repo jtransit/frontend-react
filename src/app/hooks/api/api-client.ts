@@ -7,34 +7,8 @@ const useApiClient = () => {
     timeout: 30000,
   });
 
-  const getRoute = async (
-    from: string,
-    to: string,
-    departBy: string,
-    maxWalkDistance: string,
-    config?: AxiosRequestConfig
-  ) => {
-    const _config = {
-      url: 'getOTP',
-      params: {
-        fromPlace: from,
-        toPlace: to,
-        departBy: departBy,
-        maxWalkDistance: maxWalkDistance,
-      },
-    };
-    return await client.request({ ...config, ..._config });
-  };
-
-  const getJeepData = async () => {
-    return await client.request({
-      url: 'getRoutes',
-    });
-  };
-
   return {
-    getRoute,
-    getJeepData,
+    client,
   };
 };
 
