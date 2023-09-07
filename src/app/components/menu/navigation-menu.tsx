@@ -11,11 +11,12 @@ import _styles from './styles';
 const styles = _styles.nav;
 
 const NavigationMenu = () => {
-  const { showDrawer } = useAppContext();
+  const { showDrawer, showNavigationMenu } = useAppContext();
   const { from, to, handleChangeFrom, handleChangeTo, handleBack, handleNext } =
     useMapContext();
   const props = useSpring({
     left: showDrawer ? styles.drawerOpen.left : styles.drawerClose.left,
+    opacity: showNavigationMenu ? 1 : 0,
   });
 
   const _from = from?.address ?? '';

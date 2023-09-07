@@ -6,6 +6,8 @@ const useAppContextState: () => AppContextProps = () => {
 
   const [showDrawer, setShowDrawer] = useState(false);
 
+  const [showNavigationMenu, setShowNavigationMenu] = useState(true);
+
   const handleLoading = (v: boolean) => {
     setIsLoading(v);
   };
@@ -14,11 +16,17 @@ const useAppContextState: () => AppContextProps = () => {
     setShowDrawer(v);
   };
 
+  const handleShowNavigationMenu = (v: boolean) => {
+    setShowNavigationMenu(v);
+  };
+
   return {
     isLoading,
     showDrawer,
+    showNavigationMenu,
     handleLoading,
     handleShowDrawer,
+    handleShowNavigationMenu,
   };
 };
 

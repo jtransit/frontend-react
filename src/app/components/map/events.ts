@@ -3,7 +3,7 @@ import { useMapContext } from '@contexts/map-context';
 import { useAppContext } from '@contexts/app-context';
 
 export const MapEvents = () => {
-  const { handleShowDrawer } = useAppContext();
+  const { handleShowDrawer, handleShowNavigationMenu } = useAppContext();
 
   const { handleAction, handleContextMenuOpen, handleContextMenuClose } =
     useMapContext();
@@ -27,8 +27,12 @@ export const MapEvents = () => {
       handleReset();
     },
     dragstart: () => {
+      handleShowNavigationMenu(false);
       handleShowDrawer(false);
       handleReset();
+    },
+    dragend: () => {
+      handleShowNavigationMenu(true);
     },
     contextmenu: (e) => {
       handleShowDrawer(false);
