@@ -40,7 +40,10 @@ export const mapReducer = (state: MapState, action: MapAction) => {
     case actions.handleSetFrom: {
       newState = {
         ...state,
-        from: action.value as L.LatLng,
+        from: {
+          ...state.from,
+          latLng: action.value as L.LatLng,
+        },
         isContextMenuOpen: false,
       };
       break;
@@ -48,8 +51,31 @@ export const mapReducer = (state: MapState, action: MapAction) => {
     case actions.handleSetTo: {
       newState = {
         ...state,
-        to: action.value as L.LatLng,
+        to: {
+          ...state.to,
+          latLng: action.value as L.LatLng,
+        },
         isContextMenuOpen: false,
+      };
+      break;
+    }
+    case actions.handleChangeFrom: {
+      newState = {
+        ...state,
+        from: {
+          ...state.from,
+          address: action.value as string,
+        },
+      };
+      break;
+    }
+    case actions.handleChangeTo: {
+      newState = {
+        ...state,
+        to: {
+          ...state.to,
+          address: action.value as string,
+        },
       };
       break;
     }

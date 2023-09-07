@@ -40,6 +40,20 @@ const useMapContextState: () => MapContextProps = () => {
     dispatch({ type: actions.handleSetTo, value: state.latLng });
   };
 
+  const handleChangeFrom = (e: React.ChangeEvent) => {
+    dispatch({
+      type: actions.handleChangeFrom,
+      value: (e.target as HTMLInputElement).value,
+    });
+  };
+
+  const handleChangeTo = (e: React.ChangeEvent) => {
+    dispatch({
+      type: actions.handleChangeTo,
+      value: (e.target as HTMLInputElement).value,
+    });
+  };
+
   const handleNext = () => {
     dispatch({ type: actions.handleNext });
   };
@@ -58,8 +72,8 @@ const useMapContextState: () => MapContextProps = () => {
       if (state.from !== undefined && state.to !== undefined) {
         handleLoading(true);
         const response = await getRoute(
-          `${state.from.lat},${state.from.lng}`,
-          `${state.to.lat},${state.to.lng}`,
+          `${state.from.latLng?.lat},${state.from.latLng?.lng}`,
+          `${state.to.latLng?.lat},${state.to.latLng?.lng}`,
           '0',
           '800'
         );
@@ -80,7 +94,7 @@ const useMapContextState: () => MapContextProps = () => {
     };
 
     request();
-  }, [state.from, state.to]);
+  }, [state.from?.latLng, state.to?.latLng]);
 
   return {
     isLoading: state.isLoading,
@@ -97,6 +111,8 @@ const useMapContextState: () => MapContextProps = () => {
     handleContextMenuClose,
     handleSetFrom,
     handleSetTo,
+    handleChangeFrom,
+    handleChangeTo,
     handleNext,
     handleBack,
     handleClear,

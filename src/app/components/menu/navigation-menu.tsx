@@ -12,13 +12,14 @@ const styles = _styles.nav;
 
 const NavigationMenu = () => {
   const { showDrawer } = useAppContext();
-  const { from, to, handleBack, handleNext } = useMapContext();
+  const { from, to, handleChangeFrom, handleChangeTo, handleBack, handleNext } =
+    useMapContext();
   const props = useSpring({
     left: showDrawer ? styles.drawerOpen.left : styles.drawerClose.left,
   });
 
-  const _from = from?.toString() ?? '';
-  const _to = to?.toString() ?? '';
+  const _from = from?.address ?? '';
+  const _to = to?.address ?? '';
 
   const AnimatedMenu = animated(Box);
 
@@ -27,7 +28,12 @@ const NavigationMenu = () => {
       <Box>
         <Box sx={styles.inputWrapper}>
           <TripOriginIcon sx={styles.origin} />
-          <Input sx={styles.input} placeholder='Origin' value={_from} />
+          <Input
+            sx={styles.input}
+            placeholder='Origin'
+            onChange={handleChangeFrom}
+            value={_from}
+          />
         </Box>
         <Box sx={styles.dividerWrapper}>
           <Box sx={styles.moreWrapper}>
@@ -37,7 +43,12 @@ const NavigationMenu = () => {
         </Box>
         <Box sx={styles.inputWrapper}>
           <TripOriginIcon sx={styles.destination} />
-          <Input sx={styles.input} placeholder='Destination' value={_to} />
+          <Input
+            sx={styles.input}
+            placeholder='Destination'
+            onChange={handleChangeTo}
+            value={_to}
+          />
         </Box>
       </Box>
       <Box>

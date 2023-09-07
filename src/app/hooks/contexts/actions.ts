@@ -9,4 +9,6 @@ export const actions = {
   handleBack: 'handleBack',
   handleClear: 'handleClear',
   handleSetRoutes: 'handleSetRoutes',
+  handleChangeFrom: 'handleChangeFrom',
+  handleChangeTo: 'handleChangeTo',
 };

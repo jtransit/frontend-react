@@ -7,8 +7,8 @@ export interface MapContextProps {
   action?: string;
   containerPoint: L.Point;
   latLng: L.LatLng;
-  from?: L.LatLng;
-  to?: L.LatLng;
+  from?: Location;
+  to?: Location;
   selectedRoute: Record<string, unknown>;
   handleLoading: (v: boolean) => void;
   handleAction: (v?: string) => void;
@@ -16,6 +16,8 @@ export interface MapContextProps {
   handleContextMenuClose: () => void;
   handleSetFrom: () => void;
   handleSetTo: () => void;
+  handleChangeFrom: (e: any) => void;
+  handleChangeTo: (e: any) => void;
   handleNext: () => void;
   handleBack: () => void;
   handleClear: () => void;
@@ -33,6 +35,8 @@ export const defaultMapContext: MapContextProps = {
   handleContextMenuClose: () => {},
   handleSetFrom: () => {},
   handleSetTo: () => {},
+  handleChangeFrom: (e: any) => {},
+  handleChangeTo: (e: any) => {},
   handleNext: () => {},
   handleBack: () => {},
   handleClear: () => {},
@@ -47,6 +51,11 @@ export interface MapAction {
   value?: string | boolean | L.LeafletMouseEvent | L.LatLng;
 }
 
+interface Location {
+  address?: string;
+  latLng?: L.LatLng;
+}
+
 export interface MapState {
   isLoading: boolean;
   action?: string;
@@ -54,8 +63,8 @@ export interface MapState {
   containerPoint: L.Point;
   eventHandler?: L.LeafletMouseEvent;
   latLng: L.LatLng;
-  from?: L.LatLng;
-  to?: L.LatLng;
+  from?: Location;
+  to?: Location;
   routes: Array<Record<string, unknown>>;
   selectedRouteIndex: number;
 }
