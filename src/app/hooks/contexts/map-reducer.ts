@@ -2,7 +2,7 @@ import { MapAction, MapState } from '@app-types/map-context';
 import { actions } from './actions';
 
 export const mapReducer = (state: MapState, action: MapAction) => {
-  let newState;
+  let newState: MapState;
 
   switch (action.type) {
     case actions.handleLoading: {
@@ -37,35 +37,15 @@ export const mapReducer = (state: MapState, action: MapAction) => {
       };
       break;
     }
-    case actions.handleSetFrom: {
-      newState = {
-        ...state,
-        from: {
-          ...state.from,
-          latLng: action.value as L.LatLng,
-        },
-        isContextMenuOpen: false,
-      };
-      break;
-    }
-    case actions.handleSetTo: {
-      newState = {
-        ...state,
-        to: {
-          ...state.to,
-          latLng: action.value as L.LatLng,
-        },
-        isContextMenuOpen: false,
-      };
-      break;
-    }
     case actions.handleChangeFrom: {
       newState = {
         ...state,
         from: {
           ...state.from,
           address: action.value as string,
+          latLng: action?.value ? undefined : state.latLng,
         },
+        isContextMenuOpen: false,
       };
       break;
     }
@@ -73,9 +53,11 @@ export const mapReducer = (state: MapState, action: MapAction) => {
       newState = {
         ...state,
         to: {
-          ...state.to,
+          ...state.from,
           address: action.value as string,
+          latLng: action?.value ? undefined : state.latLng,
         },
+        isContextMenuOpen: false,
       };
       break;
     }
@@ -111,7 +93,7 @@ export const mapReducer = (state: MapState, action: MapAction) => {
     case actions.handleSetRoutes: {
       newState = {
         ...state,
-        routes: [],
+        routes: action.value as Record<string, unknown>[],
         selectedRouteIndex: 0,
         isLoading: false,
       };

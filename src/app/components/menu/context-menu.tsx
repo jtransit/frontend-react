@@ -5,9 +5,8 @@ export const ContextMenu = () => {
   const {
     isContextMenuOpen,
     containerPoint,
-    action,
-    handleSetFrom,
-    handleSetTo,
+    handleChangeFrom,
+    handleChangeTo,
     handleClear,
   } = useMapContext();
 
@@ -31,9 +30,12 @@ export const ContextMenu = () => {
           <ul>
             <ContextMenuItem
               name='Directions from here'
-              handler={handleSetFrom}
+              handler={() => handleChangeFrom()}
             />
-            <ContextMenuItem name='Directions to here' handler={handleSetTo} />
+            <ContextMenuItem
+              name='Directions to here'
+              handler={() => handleChangeTo()}
+            />
             <ContextMenuItem name='Clear' handler={handleClear} />
           </ul>
         </div>

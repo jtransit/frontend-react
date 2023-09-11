@@ -32,25 +32,17 @@ const useMapContextState: () => MapContextProps = () => {
     dispatch({ type: actions.handleContextMenuClose });
   };
 
-  const handleSetFrom = () => {
-    dispatch({ type: actions.handleSetFrom, value: state.latLng });
-  };
-
-  const handleSetTo = () => {
-    dispatch({ type: actions.handleSetTo, value: state.latLng });
-  };
-
-  const handleChangeFrom = (e: React.ChangeEvent) => {
+  const handleChangeFrom = (e?: React.ChangeEvent) => {
     dispatch({
       type: actions.handleChangeFrom,
-      value: (e.target as HTMLInputElement).value,
+      value: e && (e.target as HTMLInputElement).value,
     });
   };
 
-  const handleChangeTo = (e: React.ChangeEvent) => {
+  const handleChangeTo = (e?: React.ChangeEvent) => {
     dispatch({
       type: actions.handleChangeTo,
-      value: (e.target as HTMLInputElement).value,
+      value: e && (e.target as HTMLInputElement).value,
     });
   };
 
@@ -69,7 +61,7 @@ const useMapContextState: () => MapContextProps = () => {
   // TODO:WIP API routing
   useEffect(() => {
     const request = async () => {
-      if (state.from !== undefined && state.to !== undefined) {
+      if (state.from?.latLng !== undefined && state.to?.latLng !== undefined) {
         handleLoading(true);
         const response = await getRoute(
           `${state.from.latLng?.lat},${state.from.latLng?.lng}`,
@@ -89,7 +81,7 @@ const useMapContextState: () => MapContextProps = () => {
           });
         });
 
-        dispatch({ type: actions.handleSetRoutes });
+        dispatch({ type: actions.handleSetRoutes, value: routes });
       }
     };
 
@@ -109,8 +101,6 @@ const useMapContextState: () => MapContextProps = () => {
     handleAction,
     handleContextMenuOpen,
     handleContextMenuClose,
-    handleSetFrom,
-    handleSetTo,
     handleChangeFrom,
     handleChangeTo,
     handleNext,
