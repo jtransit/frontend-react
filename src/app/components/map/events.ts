@@ -5,8 +5,10 @@ import { useAppContext } from '@contexts/app-context';
 export const MapEvents = () => {
   const { handleShowDrawer, handleShowNavigationMenu } = useAppContext();
 
-  const { handleAction, handleContextMenuOpen, handleContextMenuClose } =
-    useMapContext();
+  const {
+    defaults: { handleAction },
+    contextMenu: { handleContextMenuOpen, handleContextMenuClose },
+  } = useMapContext();
 
   const isContextMenu = (e: L.LeafletMouseEvent) => {
     return (e.originalEvent.target as HTMLInputElement).id === '';

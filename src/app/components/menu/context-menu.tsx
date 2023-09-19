@@ -3,11 +3,8 @@ import ContextMenuItem from './context-menu-item';
 
 export const ContextMenu = () => {
   const {
-    isContextMenuOpen,
-    containerPoint,
-    handleChangeFrom,
-    handleChangeTo,
-    handleClear,
+    directions: { handleChangeFrom, handleChangeTo, handleClear },
+    contextMenu: { isContextMenuOpen, containerPoint },
   } = useMapContext();
 
   return (
