@@ -1,4 +1,5 @@
-import { Box, Input, Divider } from '@mui/material';
+import { useMemo } from 'react';
+import { Box, Divider } from '@mui/material';
 import TripOriginIcon from '@mui/icons-material/TripOrigin';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
@@ -6,21 +7,40 @@ import { useSpring, animated } from '@react-spring/web';
 
 import { useAppContext } from '@contexts/app-context';
 import { useMapContext } from '@contexts/map-context';
+import AutoCompleteComponent from './autocomplete';
 import _styles from './styles';
 
 const styles = _styles.nav;
 
 const NavigationMenu = () => {
   const { showDrawer, showNavigationMenu } = useAppContext();
-  const { from, to, handleChangeFrom, handleChangeTo, handleBack, handleNext } =
-    useMapContext();
+
+  const {
+    directions: {
+      search: { isLoading: isLoadingSearch, list },
+      location: { from, to },
+      handleChangeFrom,
+      handleChangeTo,
+      handleBack,
+      handleNext,
+    },
+  } = useMapContext();
+
   const props = useSpring({
     left: showDrawer ? styles.drawerOpen.left : styles.drawerClose.left,
     opacity: showNavigationMenu ? 1 : 0,
   });
 
-  const _from = from?.address ?? '';
-  const _to = to?.address ?? '';
+  const options = useMemo(
+    () =>
+      list.map((v) => {
+        return {
+          center: v.center,
+          label: v.place_name,
+        };
+      }),
+    [list]
+  );
 
   const AnimatedMenu = animated(Box);
 
@@ -29,11 +49,15 @@ const NavigationMenu = () => {
       <Box>
         <Box sx={styles.inputWrapper}>
           <TripOriginIcon sx={styles.origin} />
-          <Input
-            sx={styles.input}
-            placeholder='Origin'
-            onChange={handleChangeFrom}
-            value={_from}
+          <AutoCompleteComponent
+            isLoading={isLoadingSearch}
+            options={options}
+            placeholder='Directions from'
+            value={{
+              center: [from.latLng?.lng ?? 0, from.latLng?.lat ?? 0],
+              label: from.address,
+            }}
+            changeHandler={handleChangeFrom}
           />
         </Box>
         <Box sx={styles.dividerWrapper}>
@@ -44,18 +68,22 @@ const NavigationMenu = () => {
         </Box>
         <Box sx={styles.inputWrapper}>
           <TripOriginIcon sx={styles.destination} />
-          <Input
-            sx={styles.input}
-            placeholder='Destination'
-            onChange={handleChangeTo}
-            value={_to}
+          <AutoCompleteComponent
+            isLoading={isLoadingSearch}
+            options={options}
+            placeholder='Directions to'
+            value={{
+              center: [to.latLng?.lng ?? 0, to.latLng?.lat ?? 0],
+              label: to.address,
+            }}
+            changeHandler={handleChangeTo}
           />
         </Box>
       </Box>
       <Box>
         <SwapVertIcon sx={styles.swapIcon} />
       </Box>
-      {from !== undefined && to !== undefined && (
+      {from?.latLng !== undefined && to?.latLng !== undefined && (
         // WIP UI
         <>
           <div className='py-1 space-x-1'>

@@ -1,4 +1,5 @@
 import { MapAction, MapState } from '@app-types/map-context';
+import { LocationInfo } from '@app-types/directions';
 import { actions } from './actions';
 
 export const mapReducer = (state: MapState, action: MapAction) => {
@@ -38,24 +39,26 @@ export const mapReducer = (state: MapState, action: MapAction) => {
       break;
     }
     case actions.handleChangeFrom: {
+      const location = action.value as LocationInfo;
       newState = {
         ...state,
         from: {
           ...state.from,
-          address: action.value as string,
-          latLng: action?.value ? undefined : state.latLng,
+          address: location.address,
+          latLng: location?.latLng ?? state.latLng,
         },
         isContextMenuOpen: false,
       };
       break;
     }
     case actions.handleChangeTo: {
+      const location = action.value as LocationInfo;
       newState = {
         ...state,
         to: {
-          ...state.from,
-          address: action.value as string,
-          latLng: action?.value ? undefined : state.latLng,
+          ...state.to,
+          address: location.address,
+          latLng: location?.latLng ?? state.latLng,
         },
         isContextMenuOpen: false,
       };
@@ -82,8 +85,16 @@ export const mapReducer = (state: MapState, action: MapAction) => {
     case actions.handleClear: {
       newState = {
         ...state,
-        from: undefined,
-        to: undefined,
+        from: {
+          ...state.from,
+          address: '',
+          latLng: undefined,
+        },
+        to: {
+          ...state.to,
+          address: '',
+          latLng: undefined,
+        },
         routes: [],
         selectedRouteIndex: 0,
         isContextMenuOpen: false,

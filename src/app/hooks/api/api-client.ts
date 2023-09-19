@@ -1,10 +1,10 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
-const useApiClient = () => {
+const useApiClient = (options?: { baseURL?: string }) => {
   const client = axios.create({
-    baseURL: 'https://jtransit.iapos.dev/webapp',
+    baseURL: options?.baseURL ?? 'https://jtransit.iapos.dev/webapp',
     responseType: 'json',
-    timeout: 30000,
+    timeout: 50000,
   });
 
   return {

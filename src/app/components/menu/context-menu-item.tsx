@@ -7,7 +7,9 @@ const ContextMenuItem = ({
   name: string;
   handler: () => void;
 }) => {
-  const { action } = useMapContext();
+  const {
+    defaults: { action },
+  } = useMapContext();
 
   return (
     <li className='hover:bg-gray-200 p-1'>

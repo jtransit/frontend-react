@@ -7,7 +7,9 @@ import { useMapContext } from '@/app/contexts/map-context';
 const colors = ['blue', 'red', 'green', 'purple', 'orange'];
 
 const Line = () => {
-  const { selectedRoute } = useMapContext();
+  const {
+    directions: { selectedRoute },
+  } = useMapContext();
 
   const generateLine = () => {
     return (selectedRoute as any)?.points.map((p: any, i: number) => {
