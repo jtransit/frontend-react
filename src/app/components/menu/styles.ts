@@ -1,19 +1,21 @@
 const styles = {
   nav: {
+    wrapper: {
+      zIndex: 400,
+      top: '1.5rem',
+      position: 'absolute',
+    },
     menu: {
       boxShadow: 2,
-      position: 'absolute',
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
       gap: '0.5rem',
-      zIndex: 400,
       width: 'auto',
       height: 'auto',
       border: '1px solid transparent',
       borderRadius: '5px',
       background: 'white',
-      top: '1.5rem',
       padding: '0.5rem',
     },
     drawerOpen: { left: '15rem' },
