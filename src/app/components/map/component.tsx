@@ -2,8 +2,6 @@
 import React from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 import { MapContextProvider } from '@contexts/map-context';
 import { MapEvents } from '@components/map/events';
