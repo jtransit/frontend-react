@@ -10,7 +10,7 @@ import { MapContextProvider } from '@contexts/map-context';
 import { MapEvents } from '@components/map/events';
 import { ContextMenu } from '@components/menu/context-menu';
 import Line from '@components/map/line';
-import NavigationMenu from '@components/menu/navigation-menu';
+import NavigationWrapper from '@components/menu/navigation-wrapper';
 import Markers from './markers';
 
 L.Marker.prototype.options.icon = L.icon({
@@ -35,7 +35,7 @@ const MapComponent = () => {
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         <ContextMenu />
-        <NavigationMenu />
+        <NavigationWrapper />
         <Markers />
         <Line />
         <MapEvents />
