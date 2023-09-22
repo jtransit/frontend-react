@@ -30,7 +30,6 @@ const AutoCompleteComponent = ({
       options={options}
       sx={styles.input}
       onChange={(e, v) => {
-        console.log('Autocomplete', v);
         changeHandler(v?.label ?? '', v?.center);
       }}
       value={value}

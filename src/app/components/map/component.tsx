@@ -20,6 +20,7 @@ L.Marker.prototype.options.icon = L.icon({
   popupAnchor: [0, -51],
 });
 
+// TODO: theme context logic
 const lightMapboxId = 'ckdherlyu0utb1is8ganp07dh';
 const darkMapboxId = 'ckdheohzu148s1io9pfuz083f';
 
