@@ -101,8 +101,6 @@ export const mapReducer = (state: MapState, action: MapAction) => {
           address: '',
           latLng: undefined,
         },
-        // routes: [],
-        // selectedRouteIndex: 0,
         isContextMenuOpen: false,
       };
       break;

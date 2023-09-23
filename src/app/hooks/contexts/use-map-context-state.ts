@@ -108,30 +108,20 @@ const useMapContextState: () => MapContextProps = () => {
           '800'
         );
 
-        const legGeometryPoints: Array<Record<string, unknown>> = [];
-        const info: Array<Record<string, unknown>> = [];
-        response.data.plan.itineraries.forEach((route: any) => {
-          const points: string[] = [];
-          const from: string[] = [];
-          const routeName: string[] = [];
-          route.legs.forEach((leg: any) => {
-            points.push(leg.legGeometry.points);
-            from.push(leg.from.name);
-            routeName.push(leg.route);
-          });
-          legGeometryPoints.push({
-            points: points,
-          });
-          info.push({
-            name: from,
-            routeName: routeName,
+        const info = response.data.plan.itineraries.map((route: any) => {
+          return route.legs.map((leg: any) => {
+            return {
+              points: leg.legGeometry.points,
+              from: leg.from.name,
+              name: leg.route,
+            };
           });
         });
 
-        dispatch({
-          type: actions.handleSetRoutes,
-          value: { list: legGeometryPoints, info: info } as Route,
-        });
+        // dispatch({
+        //   type: actions.handleSetRoutes,
+        //   value: info
+        // });
       }
     };
 
