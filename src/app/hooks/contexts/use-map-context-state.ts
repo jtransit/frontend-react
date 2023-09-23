@@ -5,7 +5,7 @@ import { debounce } from 'lodash';
 import useMapService from '@hooks/services/map-service';
 import { MapContextProps, defaultMapState } from '@app-types/map-context';
 import useRouteService from '@hooks/services/route-service';
-import { LocationInfo } from '@app-types/directions';
+import { LocationInfo, Route } from '@app-types/directions';
 import { mapReducer } from './map-reducer';
 import { actions } from './actions';
 
@@ -20,10 +20,13 @@ const useMapContextState: () => MapContextProps = () => {
     search,
   } = useMapService();
 
-  const selectedRoute = useMemo(
-    () => state.routes[state.selectedRouteIndex],
-    [state.routes, state.selectedRouteIndex]
-  );
+  const route = useMemo(() => {
+    return {
+      index: state.route.index,
+      selected: state.route.list[state.route.index],
+      info: state.route.info,
+    };
+  }, [state.route, state.route]);
 
   const debouncedSearch = useMemo(
     () => debounce((v: string) => search(v), 1000),
@@ -105,18 +108,20 @@ const useMapContextState: () => MapContextProps = () => {
           '800'
         );
 
-        const routes: Array<Record<string, unknown>> = [];
-        response.data.plan.itineraries.forEach((route: any) => {
-          const data: string[] = [];
-          route.legs.forEach((leg: any) => {
-            data.push(leg.legGeometry.points);
-          });
-          routes.push({
-            points: data,
+        const info = response.data.plan.itineraries.map((route: any) => {
+          return route.legs.map((leg: any) => {
+            return {
+              points: leg.legGeometry.points,
+              from: leg.from.name,
+              name: leg.route,
+            };
           });
         });
 
-        dispatch({ type: actions.handleSetRoutes, value: routes });
+        // dispatch({
+        //   type: actions.handleSetRoutes,
+        //   value: info
+        // });
       }
     };
 
@@ -139,7 +144,9 @@ const useMapContextState: () => MapContextProps = () => {
         isLoading: isLoadingSearch,
         list: searchSuggestions.features,
       },
-      selectedRoute,
+      selectedRoute: route.selected,
+      routeInfo: route.info,
+      routeIndex: route.index,
       handleChangeFrom,
       handleChangeTo,
       handleNext,

@@ -10,7 +10,7 @@ import { MapContextProvider } from '@contexts/map-context';
 import { MapEvents } from '@components/map/events';
 import { ContextMenu } from '@components/menu/context-menu';
 import Line from '@components/map/line';
-import NavigationMenu from '@components/menu/navigation-menu';
+import NavigationWrapper from '@components/menu/navigation-wrapper';
 import Markers from './markers';
 
 L.Marker.prototype.options.icon = L.icon({
@@ -20,6 +20,10 @@ L.Marker.prototype.options.icon = L.icon({
   popupAnchor: [0, -51],
 });
 
+// TODO: theme context logic
+const lightMapboxId = 'ckdherlyu0utb1is8ganp07dh';
+const darkMapboxId = 'ckdheohzu148s1io9pfuz083f';
+
 const MapComponent = () => {
   return (
     <MapContainer
@@ -27,15 +31,15 @@ const MapComponent = () => {
       zoom={13}
       zoomControl={false}
       scrollWheelZoom={true}
+      attributionControl={false}
       style={{ height: '100vh', width: '100wh' }}
     >
       <MapContextProvider>
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          url={`https://api.mapbox.com/styles/v1/boscafsoftware/${lightMapboxId}/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN}`}
         />
         <ContextMenu />
-        <NavigationMenu />
+        <NavigationWrapper />
         <Markers />
         <Line />
         <MapEvents />

@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import L from 'leaflet';
 
 import { Suggestions, defaultSuggestions } from '@app-types/map-service';
-import { Location, LocationInfo } from '@app-types/directions';
+import { Location, LocationInfo, Route } from '@app-types/directions';
 
 export interface MapContextProps {
   defaults: DefaultProps;
@@ -24,6 +24,8 @@ interface DirectionProps {
     list: Suggestions['features'];
   };
   selectedRoute: Record<string, unknown>;
+  routeInfo: Record<string, unknown>[];
+  routeIndex: number;
   handleChangeFrom: (v?: string, latLng?: number[]) => void;
   handleChangeTo: (v?: string, latLng?: number[]) => void;
   handleNext: () => void;
@@ -59,6 +61,8 @@ export const defaultMapContext: MapContextProps = {
       list: defaultSuggestions.features,
     },
     selectedRoute: {},
+    routeInfo: [{}],
+    routeIndex: 0,
     handleChangeFrom: (v?: string, latLng?: number[]) => {},
     handleChangeTo: (v?: string, latLng?: number[]) => {},
     handleNext: () => () => {},
@@ -86,7 +90,8 @@ export interface MapAction {
     | L.LeafletMouseEvent
     | L.LatLng
     | Record<string, unknown>[]
-    | LocationInfo;
+    | LocationInfo
+    | Route;
 }
 
 export interface MapState {
@@ -98,8 +103,7 @@ export interface MapState {
   latLng: L.LatLng;
   from: LocationInfo;
   to: LocationInfo;
-  routes: Array<Record<string, unknown>>;
-  selectedRouteIndex: number;
+  route: Route;
 }
 
 export const defaultMapState: MapState = {
@@ -107,8 +111,12 @@ export const defaultMapState: MapState = {
   isContextMenuOpen: false,
   containerPoint: defaultMapContext.contextMenu.containerPoint,
   latLng: defaultMapContext.contextMenu.latLng,
-  routes: [],
-  selectedRouteIndex: 0,
+  route: {
+    index: 0,
+    isLoading: false,
+    list: [],
+    info: [],
+  },
   from: {
     address: '',
   },

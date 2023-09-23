@@ -1,5 +1,5 @@
 import { MapAction, MapState } from '@app-types/map-context';
-import { LocationInfo } from '@app-types/directions';
+import { LocationInfo, Route } from '@app-types/directions';
 import { actions } from './actions';
 
 export const mapReducer = (state: MapState, action: MapAction) => {
@@ -65,20 +65,26 @@ export const mapReducer = (state: MapState, action: MapAction) => {
       break;
     }
     case actions.handleNext: {
-      const selected = state.selectedRouteIndex;
+      const selected = state.route.index;
+      const list = state.route.list;
       newState = {
         ...state,
-        selectedRouteIndex:
-          state.routes[selected + 1] === undefined ? selected : selected + 1,
+        route: {
+          ...state.route,
+          index: list[selected + 1] === undefined ? selected : selected + 1,
+        },
       };
       break;
     }
     case actions.handleBack: {
-      const selected = state.selectedRouteIndex;
+      const selected = state.route.index;
+      const list = state.route.list;
       newState = {
         ...state,
-        selectedRouteIndex:
-          state.routes[selected - 1] === undefined ? selected : selected - 1,
+        route: {
+          ...state.route,
+          index: list[selected - 1] === undefined ? selected : selected - 1,
+        },
       };
       break;
     }
@@ -95,18 +101,21 @@ export const mapReducer = (state: MapState, action: MapAction) => {
           address: '',
           latLng: undefined,
         },
-        routes: [],
-        selectedRouteIndex: 0,
         isContextMenuOpen: false,
       };
       break;
     }
     case actions.handleSetRoutes: {
+      const route = action.value as Partial<Route>;
       newState = {
         ...state,
-        routes: action.value as Record<string, unknown>[],
-        selectedRouteIndex: 0,
-        isLoading: false,
+        route: {
+          ...state.route,
+          index: 0,
+          isLoading: false,
+          list: route.list ?? [],
+          info: route.info ?? [],
+        },
       };
       break;
     }

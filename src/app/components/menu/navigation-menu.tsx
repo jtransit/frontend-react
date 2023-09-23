@@ -3,9 +3,7 @@ import { Box, Divider } from '@mui/material';
 import TripOriginIcon from '@mui/icons-material/TripOrigin';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
-import { useSpring, animated } from '@react-spring/web';
 
-import { useAppContext } from '@contexts/app-context';
 import { useMapContext } from '@contexts/map-context';
 import AutoCompleteComponent from './autocomplete';
 import _styles from './styles';
@@ -13,8 +11,6 @@ import _styles from './styles';
 const styles = _styles.nav;
 
 const NavigationMenu = () => {
-  const { showDrawer, showNavigationMenu } = useAppContext();
-
   const {
     directions: {
       search: { isLoading: isLoadingSearch, list },
@@ -25,11 +21,6 @@ const NavigationMenu = () => {
       handleNext,
     },
   } = useMapContext();
-
-  const props = useSpring({
-    left: showDrawer ? styles.drawerOpen.left : styles.drawerClose.left,
-    opacity: showNavigationMenu ? 1 : 0,
-  });
 
   const options = useMemo(
     () =>
@@ -42,10 +33,8 @@ const NavigationMenu = () => {
     [list]
   );
 
-  const AnimatedMenu = animated(Box);
-
   return (
-    <AnimatedMenu sx={[styles.menu]} style={props}>
+    <Box sx={[styles.menu]}>
       <Box>
         <Box sx={styles.inputWrapper}>
           <TripOriginIcon sx={styles.origin} />
@@ -102,7 +91,7 @@ const NavigationMenu = () => {
           </div>
         </>
       )}
-    </AnimatedMenu>
+    </Box>
   );
 };
 
